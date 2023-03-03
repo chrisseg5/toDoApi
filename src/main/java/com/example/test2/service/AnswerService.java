@@ -11,7 +11,4 @@ public interface AnswerService {
 
     Answer saveAnswer (Answer answer);
 
-//    List<Answer> getAllAnswer();
-//    Answer getAnswerById(long id);
-//    Answer deleteAnswer(long id);
 }

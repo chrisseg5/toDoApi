@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.annotations.ApiOperation
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class AnswerController {
     @Autowired
     private QuestionRepository questionRepository;
 
-
+    @ApiOperation
     @GetMapping("/{questionId}/answers")
     public ResponseEntity<List<Answer>> getAllAnswersByQuestionId(@PathVariable(value = "questionId") Long questionId) {
         if (!questionRepository.existsById(questionId)) {
@@ -32,8 +33,8 @@ public class AnswerController {
         List<Answer> answers = answerRepository.findByQuestionId(questionId);
         return new ResponseEntity<>(answers, HttpStatus.OK);
 
-    }
 
+    }
     @GetMapping("/answers/{id}")
     public ResponseEntity<Answer> getAnswersByQuestionId(@PathVariable(value = "id") Long id) {
         Answer answer = answerRepository.findById(id)
@@ -59,6 +60,17 @@ public class AnswerController {
         answerRepository.deleteById(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+    @PutMapping("/answer/{id}")
+    public ResponseEntity<Answer> updateAnswer(@PathVariable("id") long id, @RequestBody Answer answerRequest) {
+        Answer answer = answerRepository.findById(id)
+                .orElseThrow(() ->new ResourceNotFoundException("answer","Id",id));
+
+        answer.setQuestion(answerRequest.getQuestion());
+
+        return new ResponseEntity<>(answerRepository.save(answer), HttpStatus.OK);
     }
 
 

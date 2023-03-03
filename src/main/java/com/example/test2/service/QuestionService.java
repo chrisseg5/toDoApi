@@ -8,7 +8,7 @@ import java.util.List;
 @Validated
 public interface QuestionService {
     Question saveQuestion (Question question);
-    List<Question> getAllQuestions();
-    Question getQuestionById(long id);
-    Question deleteQuestion(long id);
+//    List<Question> getAllQuestions();
+//    Question getQuestionById(long id);
+//    Question deleteQuestion(long id);
 }

@@ -22,24 +22,24 @@ public class QuestionServiceImpl implements QuestionService {
         return questionRepository.save(question);
     }
 
-    @Override
-    public List<Question> getAllQuestions() {
-        return questionRepository.findAll();
-    }
-
-    @Override
-    public Question getQuestionById(long id) {
-        Optional<Question> question= questionRepository.findById(id);
-        if(question.isPresent()){
-            return question.get();
-        }else {
-            throw new ResourceNotFoundException("question","Id",id);
-        }
-    }
-
-    @Override
-    public Question deleteQuestion(long id) {
-//         return questionRepository.deleteById(id);
-        return null;
-    }
+//    @Override
+//    public List<Question> getAllQuestions() {
+//        return questionRepository.findAll();
+//    }
+//
+//    @Override
+//    public Question getQuestionById(long id) {
+//        Optional<Question> question= questionRepository.findById(id);
+//        if(question.isPresent()){
+//            return question.get();
+//        }else {
+//            throw new ResourceNotFoundException("question","Id",id);
+//        }
+//    }
+//
+//    @Override
+//    public Question deleteQuestion(long id) {
+////         return questionRepository.deleteById(id);
+//        return null;
+//    }
 }

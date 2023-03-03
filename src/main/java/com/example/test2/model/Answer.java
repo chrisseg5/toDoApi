@@ -1,5 +1,9 @@
 package com.example.test2.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,8 +13,10 @@ public class Answer {
     private long id;
     private String answerText;
     private boolean isCorrect;
-    @ManyToOne
-    @JoinColumn(name="question_id", nullable=false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "question_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Question question;
 
     public Answer() {
