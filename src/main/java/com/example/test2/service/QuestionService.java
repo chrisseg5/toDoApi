@@ -6,6 +6,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 @Validated
+@Service
 public interface QuestionService {
     Question saveQuestion (Question question);
 //    List<Question> getAllQuestions();

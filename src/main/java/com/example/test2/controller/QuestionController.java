@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RequestMapping("/api")
 @Controller
 public class QuestionController {
@@ -17,6 +20,9 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
+    /**
+     * Ανάκτηση ερώτησης απο το id της
+     */
     @GetMapping("/question/{id}")
     public ResponseEntity<Question> getQuestionById(@PathVariable("id") long id) {
         Question question = questionRepository.findById(id)
@@ -25,14 +31,18 @@ public class QuestionController {
         return new ResponseEntity<>(question, HttpStatus.OK);
 
     }
-
+    /**
+     *Δημιουργία ερώτησης
+     */
     @PostMapping(value = "/question/saveQuestion")
     @ResponseBody
     public Question saveQuestion(@RequestBody Question question){
         Question questionResponse = questionService.saveQuestion(question);
         return  questionResponse;
     }
-
+    /**
+     *Διαγραφή ερώτησης μέσω id
+     */
     @DeleteMapping("/question/delete/{id}")
     public ResponseEntity<HttpStatus> deleteQuestion(@PathVariable("id") long id) {
         questionRepository.deleteById(id);
@@ -40,7 +50,9 @@ public class QuestionController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-
+    /**
+     *Ενημέρωση ερώτησης μεσω id
+     */
     @PutMapping("/question/{id}")
     public ResponseEntity<Question> updateQuestion(@PathVariable("id") long id, @RequestBody Question question) {
         Question _question = questionRepository.findById(id)
@@ -51,5 +63,15 @@ public class QuestionController {
 
         return new ResponseEntity<>(questionRepository.save(_question), HttpStatus.OK);
     }
+    /**
+     * Ανάκτηση όλων των ερωτήσεων
+     */
+    @GetMapping("/questions")
+    @ResponseBody
+    public List<Question> getAllQuestions() {
+        List<Question> questionResponse = (List<Question>) questionRepository.findAll();
+        return questionResponse;
+    }
+
 
 }
