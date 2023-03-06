@@ -1,9 +1,12 @@
 package com.example.test2.controller;
+import com.example.test2.dto.QuestionIndexDto;
 import com.example.test2.exception.ResourceNotFoundException;
 import com.example.test2.model.Question;
 import com.example.test2.repository.QuestionRepository;
 import com.example.test2.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -66,12 +69,26 @@ public class QuestionController {
     /**
      * Ανάκτηση όλων των ερωτήσεων
      */
+//    @GetMapping("/questions")
+//    @ResponseBody
+//    public List<Question> getAllQuestions() {
+//        List<Question> questionResponse = (List<Question>) questionRepository.findAll();
+//        return questionResponse;
+//    }
     @GetMapping("/questions")
     @ResponseBody
-    public List<Question> getAllQuestions() {
-        List<Question> questionResponse = (List<Question>) questionRepository.findAll();
-        return questionResponse;
+    public List<QuestionIndexDto> allQuestions(){
+
+        return questionService.allQuestions();
+
     }
+
+
+
+
+
+
+
 
 
 }

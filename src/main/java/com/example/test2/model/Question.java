@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "question")
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private long id;
+    @Column(name = "question_text")
     String questionText;
     @OneToMany(mappedBy = "question")
     private List<Answer> answerList=new ArrayList<>();
