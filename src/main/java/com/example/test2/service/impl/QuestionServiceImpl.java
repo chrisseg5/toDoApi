@@ -1,13 +1,23 @@
 package com.example.test2.service.impl;
 import com.example.test2.args.QuestionArgs;
 import com.example.test2.dto.QuestionIndexDto;
-import com.example.test2.exception.ResourceNotFoundException;
+
+import com.example.test2.model.QQuestion;
 import com.example.test2.model.Question;
+
 import com.example.test2.repository.QuestionRepository;
 import com.example.test2.service.QuestionService;
+
+import com.querydsl.core.types.FactoryExpression;
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.JPQLQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +25,16 @@ import java.util.Optional;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
+    @Autowired
+    private JPAQueryFactory   queryFactory;
+
     private QuestionRepository questionRepository;
+
 
     public QuestionServiceImpl(QuestionRepository questionRepository) {
         super();
         this.questionRepository = questionRepository;
+
     }
 
 
@@ -44,27 +59,29 @@ public class QuestionServiceImpl implements QuestionService {
         return questions;
 
     }
+    /**
+     * Ορισμός των πεδίων που έρχονται στο index dto
+     */
+    private FactoryExpression<QuestionIndexDto> questionIndexDtoExpression(QQuestion qQuestion) {
+        return Projections.bean(QuestionIndexDto.class,
+
+                qQuestion.questionText
+
+        );
+    }
+
+
+    @Override
+    public Page<QuestionIndexDto> questionIndex(QuestionArgs args, Pageable pageable) {
+        QQuestion qQuestion=QQuestion.question;
+        FactoryExpression<QuestionIndexDto> factoryExpression = questionIndexDtoExpression(qQuestion) ;
+        JPQLQuery<QuestionIndexDto> query = queryFactory
+                .select(factoryExpression)
+                .from(qQuestion);
+        return  questionRepository.findAll(query,pageable);
+    }
 
 
 
-//    @Override
-//    public List<Question> getAllQuestions() {
-//        return questionRepository.findAll();
-//    }
-//
-//    @Override
-//    public Question getQuestionById(long id) {
-//        Optional<Question> question= questionRepository.findById(id);
-//        if(question.isPresent()){
-//            return question.get();
-//        }else {
-//            throw new ResourceNotFoundException("question","Id",id);
-//        }
-//    }
-//
-//    @Override
-//    public Question deleteQuestion(long id) {
-////         return questionRepository.deleteById(id);
-//        return null;
-//    }
+
 }

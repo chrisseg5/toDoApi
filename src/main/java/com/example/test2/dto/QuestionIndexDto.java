@@ -1,8 +1,9 @@
 package com.example.test2.dto;
 
 public class QuestionIndexDto {
-    private String questionText;
     private Long id;
+    private String questionText;
+
 
     public String getQuestionText() {
         return questionText;

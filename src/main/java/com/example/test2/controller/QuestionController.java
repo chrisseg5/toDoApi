@@ -1,4 +1,5 @@
 package com.example.test2.controller;
+import com.example.test2.args.QuestionArgs;
 import com.example.test2.dto.QuestionIndexDto;
 import com.example.test2.exception.ResourceNotFoundException;
 import com.example.test2.model.Question;
@@ -69,19 +70,23 @@ public class QuestionController {
     /**
      * Ανάκτηση όλων των ερωτήσεων
      */
-//    @GetMapping("/questions")
-//    @ResponseBody
-//    public List<Question> getAllQuestions() {
-//        List<Question> questionResponse = (List<Question>) questionRepository.findAll();
-//        return questionResponse;
-//    }
-    @GetMapping("/questions")
+    @GetMapping(value = "/questions", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public List<QuestionIndexDto> allQuestions(){
-
         return questionService.allQuestions();
-
     }
+
+
+
+    @PostMapping(value = "/index", produces = "application/json;charset=UTF-8")
+    public Page<QuestionIndexDto> campaignIndex(Pageable pageable, @RequestBody QuestionArgs args) {
+        return questionService.questionIndex(args, pageable);
+    }
+
+
+
+
+
 
 
 
