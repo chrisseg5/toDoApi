@@ -15,7 +15,7 @@ public interface QuestionService {
     QuestionIndexDto toDTO(Question question);
     Question saveQuestion (Question question);
     List<QuestionIndexDto> allQuestions();
-    Page<QuestionIndexDto> questionIndex(QuestionArgs args, Pageable pageable);
+//    Page<QuestionIndexDto> questionIndex(QuestionArgs args, Pageable pageable);
 
 
 //    List<Question> getAllQuestions();

@@ -46,7 +46,6 @@
     </dependencies>
     <build>
         <plugins>
-
             <plugin>
                 <groupId>com.mysema.maven</groupId>
                 <artifactId>apt-maven-plugin</artifactId>
@@ -59,10 +58,7 @@
                         <configuration>
                             <outputDirectory>target/generated-sources/java</outputDirectory>
                             <processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+                        </configuration>        </execution>    </executions></plugin>
             <plugin>
 
                 <groupId>org.springframework.boot</groupId>

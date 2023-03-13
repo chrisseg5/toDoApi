@@ -27,8 +27,16 @@ public class QuestionController {
     /**
      * Ανάκτηση ερώτησης απο το id της
      */
-    @GetMapping("/question/{id}")
-    public ResponseEntity<Question> getQuestionById(@PathVariable("id") long id) {
+//    @GetMapping("/question/{id}")
+//    public ResponseEntity<Question> getQuestionById(@PathVariable("id") long id) {
+//        Question question = questionRepository.findById(id)
+//                .orElseThrow(() -> new ResourceNotFoundException("question","Id",id));
+//
+//        return new ResponseEntity<>(question, HttpStatus.OK);
+//
+//    }
+    @GetMapping("/question")
+    public ResponseEntity<Question> getQuestionById(@RequestParam long id) {
         Question question = questionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("question","Id",id));
 
@@ -47,8 +55,8 @@ public class QuestionController {
     /**
      *Διαγραφή ερώτησης μέσω id
      */
-    @DeleteMapping("/question/delete/{id}")
-    public ResponseEntity<HttpStatus> deleteQuestion(@PathVariable("id") long id) {
+    @DeleteMapping("/question/delete")
+    public ResponseEntity<HttpStatus> deleteQuestion(@RequestParam long id) {
         questionRepository.deleteById(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -77,12 +85,12 @@ public class QuestionController {
     }
 
 
-
-    @PostMapping(value = "/index", produces = "application/json;charset=UTF-8")
-    public Page<QuestionIndexDto> campaignIndex(Pageable pageable, @RequestBody QuestionArgs args) {
-        return questionService.questionIndex(args, pageable);
-    }
-
+//
+//    @PostMapping(value = "/index", produces = "application/json;charset=UTF-8")
+//    public Page<QuestionIndexDto> campaignIndex(Pageable pageable, @RequestBody QuestionArgs args) {
+//        return questionService.questionIndex(args, pageable);
+//    }
+//
 
 
 

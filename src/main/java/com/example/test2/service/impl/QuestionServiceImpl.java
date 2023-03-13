@@ -14,8 +14,12 @@ import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 
@@ -23,19 +27,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class QuestionServiceImpl implements QuestionService {
-    @Autowired
-    private JPAQueryFactory   queryFactory;
 
+//    @Autowired
+//
+//    private JPAQueryFactory queryFactory;
+    @Autowired
     private QuestionRepository questionRepository;
 
-
-    public QuestionServiceImpl(QuestionRepository questionRepository) {
-        super();
-        this.questionRepository = questionRepository;
-
-    }
 
 
     @Override
@@ -59,6 +60,9 @@ public class QuestionServiceImpl implements QuestionService {
         return questions;
 
     }
+
+
+
     /**
      * Ορισμός των πεδίων που έρχονται στο index dto
      */
@@ -69,17 +73,16 @@ public class QuestionServiceImpl implements QuestionService {
 
         );
     }
+//    @Override
+//    public Page<QuestionIndexDto> questionIndex(QuestionArgs args, Pageable pageable) {
+//        QQuestion qQuestion=QQuestion.question;
+//        FactoryExpression<QuestionIndexDto> factoryExpression = questionIndexDtoExpression(qQuestion) ;
+//        JPQLQuery<QuestionIndexDto> query = queryFactory
+//                .select(factoryExpression)
+//                .from(qQuestion);
+//        return  questionRepository.findAll(query,pageable);
+//    }
 
-
-    @Override
-    public Page<QuestionIndexDto> questionIndex(QuestionArgs args, Pageable pageable) {
-        QQuestion qQuestion=QQuestion.question;
-        FactoryExpression<QuestionIndexDto> factoryExpression = questionIndexDtoExpression(qQuestion) ;
-        JPQLQuery<QuestionIndexDto> query = queryFactory
-                .select(factoryExpression)
-                .from(qQuestion);
-        return  questionRepository.findAll(query,pageable);
-    }
 
 
 
