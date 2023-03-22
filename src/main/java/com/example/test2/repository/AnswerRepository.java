@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
     List<Answer> findByQuestionId(Long postId);
-
+    List<Answer> findAll();
 
     @Transactional
     void deleteByQuestionId(long questionId);
