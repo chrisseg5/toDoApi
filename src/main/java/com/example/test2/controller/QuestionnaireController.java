@@ -8,12 +8,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200/")
 @RequestMapping("/api")
 public class QuestionnaireController {
     @Autowired
     QuestionnaireRepository questionnaireRepository;
+
+
     // -------------- Save a Questionnaire ---------------//
     @PostMapping("/questionnaires")
     public ResponseEntity<Questionnaire> createQuestionnaire(@RequestBody Questionnaire questionnaire) {
@@ -23,5 +28,18 @@ public class QuestionnaireController {
 
     }
 
+    // ----------------Get all Questionnaires -------------//
 
+    @GetMapping("/all/questionnaires")
+    public ResponseEntity<List<Questionnaire>> getAllQuestionnaires(@RequestParam(required = false) String name) {
+        List<Questionnaire> questionnaires = new ArrayList<Questionnaire>();
+
+        if (name == null)
+            questionnaireRepository.findAll().forEach(questionnaires::add);
+        else if (questionnaires.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(questionnaires, HttpStatus.OK);
+    }
 }
