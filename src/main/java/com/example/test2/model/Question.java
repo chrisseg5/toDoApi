@@ -1,5 +1,6 @@
 package com.example.test2.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import org.aspectj.bridge.IMessage;
 import org.springframework.validation.annotation.Validated;
@@ -21,8 +22,15 @@ public class Question {
     @Column(name = "question_text")
     String questionText;
     @OneToMany(mappedBy = "question")
-
     private List<Answer> answerList=new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "questionList")
+    @JsonIgnore
+    private List<Questionnaire> questionnaires = new ArrayList<>() ;
 
     public Question() {
     }
@@ -56,5 +64,13 @@ public class Question {
 
     public void setAnswerList(List<Answer> answerList) {
         this.answerList = answerList;
+    }
+
+    public List<Questionnaire> getQuestionnaires() {
+        return questionnaires;
+    }
+
+    public void setQuestionnaires(List<Questionnaire> questionnaires) {
+        this.questionnaires = questionnaires;
     }
 }
