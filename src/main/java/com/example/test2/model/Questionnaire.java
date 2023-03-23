@@ -30,11 +30,14 @@ public class Questionnaire {
     public Questionnaire() {
     }
 
-    public Questionnaire(long questionnaireId, String name, List<Question> questionList) {
-        this.questionnaireId = questionnaireId;
+    public Questionnaire( String name) {
+
         this.name = name;
-        this.questionList = questionList;
+
     }
+
+
+
 
     public long getQuestionnaireId() {
         return questionnaireId;
