@@ -1,10 +1,12 @@
 package com.example.test2.model;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -13,10 +15,15 @@ import java.util.List;
 public class Questionnaire {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "questionnaire_id")
-    private long questionnaireId;
+    @Column(name = "id")
+    private long id;
     @NotEmpty
     String name;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.DATE)
+    private Date date;
+
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
@@ -30,21 +37,27 @@ public class Questionnaire {
     public Questionnaire() {
     }
 
-    public Questionnaire( String name) {
+    public Questionnaire( String name, Date date) {
 
         this.name = name;
+        this.date = date;
 
     }
 
-
-
-
-    public long getQuestionnaireId() {
-        return questionnaireId;
+    public Date getDate() {
+        return date;
     }
 
-    public void setQuestionnaireId(long questionnaireId) {
-        this.questionnaireId = questionnaireId;
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

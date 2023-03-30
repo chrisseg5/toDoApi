@@ -1,8 +1,11 @@
 package com.example.test2.dto;
 
+import java.util.Date;
+
 public class QuenstionnaireIndexDto {
     private Long id;
     private String name;
+    private Date date;
 
     public Long getId() {
         return id;
@@ -18,5 +21,13 @@ public class QuenstionnaireIndexDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

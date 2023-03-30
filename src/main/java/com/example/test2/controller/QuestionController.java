@@ -1,15 +1,16 @@
 package com.example.test2.controller;
 
-import com.example.test2.args.QuestionArgs;
+
 import com.example.test2.dto.QuestionIndexDto;
 import com.example.test2.exception.ResourceNotFoundException;
+import com.example.test2.model.Answer;
 import com.example.test2.model.Question;
 import com.example.test2.repository.QuestionRepository;
+import com.example.test2.repository.QuestionnaireRepository;
 import com.example.test2.service.QuestionService;
-import com.sun.istack.NotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @RequestMapping("/api")
@@ -30,6 +31,8 @@ public class QuestionController {
     private QuestionRepository questionRepository;
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private QuestionnaireRepository questionnaireRepository;
 
     /**
      * Ανάκτηση ερώτησης απο το id της
@@ -43,6 +46,50 @@ public class QuestionController {
 //
 //    }
 
+
+
+//    /**
+//     * Δημιουργία ερώτησης με id ερωτηματολογιου
+//     */
+//@PostMapping("/questionnaires/{questionnaireId}/questions")
+//public ResponseEntity<Question> addQuestionToQuestionnaire (@PathVariable(value = "questionnaireId") Long questionnaireId, Question questionRequest){
+//    Question question = questionnaireRepository.findById(questionnaireId).map(questionnaire -> {
+//        long questionId = questionRequest.getId();
+//
+//
+//        // question is existed
+//        if(questionId != 0L) {
+//            Question _question = questionRepository.findById(questionId)
+//                    .orElseThrow(() -> new ResourceNotFoundException("question", "Id", questionId ));
+//            questionnaire.addQuestion(_question);
+//            questionnaireRepository.save(questionnaire);
+//            return _question;
+//        }
+//
+//        //add and create new question
+//        questionnaire.addQuestion(questionRequest);
+//        return questionRepository.save(questionRequest);
+//
+//    } ).orElseThrow(() -> new ResourceNotFoundException("questionnaire","id", questionnaireId));
+//    return new ResponseEntity<>(question, HttpStatus.CREATED);
+//}
+//
+    /**
+     * Δημιουργία  ερώτησης μεσω id του ερωτηματολογιου
+     */
+
+
+    /**
+     * Ανάκτηση ερώτησης απο το id του ερωτηματολογιου
+     */
+    @GetMapping("/questionnaires/questions/{id}")
+    public ResponseEntity<List<Question>> getAllQuestionsByQuestionnaireId(@PathVariable(value = "id") Long id) {
+        if (!questionnaireRepository.existsById(id)) {
+            throw new ResourceNotFoundException("questionnaire", "id", id);
+        }
+        List<Question> tags = questionRepository.findQuestionsByQuestionnairesId(id);
+        return new ResponseEntity<>(tags, HttpStatus.OK);
+    }
     /**
      * Ανάκτηση ερώτησης απο το id της με παράμετρο
      */

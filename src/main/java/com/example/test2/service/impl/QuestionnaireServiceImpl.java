@@ -27,7 +27,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         QuenstionnaireIndexDto dto = new QuenstionnaireIndexDto();
         BeanUtils.copyProperties(questionnaire, dto);
         dto.setName(questionnaire.getName());
-        dto.setId(questionnaire.getQuestionnaireId());
+        dto.setId(questionnaire.getId());
         return dto;
     }
 
