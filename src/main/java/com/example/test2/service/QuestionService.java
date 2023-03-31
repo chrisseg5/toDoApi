@@ -24,6 +24,7 @@ public interface QuestionService {
     Question updateQuestion(long id);
 
 
+
 //    Page<QuestionIndexDto> questionIndex(QuestionArgs args, Pageable pageable);
 
 //    List<Question> getAllQuestions();

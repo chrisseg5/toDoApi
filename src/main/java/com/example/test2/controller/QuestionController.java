@@ -5,6 +5,7 @@ import com.example.test2.dto.QuestionIndexDto;
 import com.example.test2.exception.ResourceNotFoundException;
 import com.example.test2.model.Answer;
 import com.example.test2.model.Question;
+import com.example.test2.model.Questionnaire;
 import com.example.test2.repository.QuestionRepository;
 import com.example.test2.repository.QuestionnaireRepository;
 import com.example.test2.service.QuestionService;
@@ -45,7 +46,6 @@ public class QuestionController {
 //        return new ResponseEntity<>(question, HttpStatus.OK);
 //
 //    }
-
 
 
 //    /**
@@ -90,6 +90,7 @@ public class QuestionController {
         List<Question> tags = questionRepository.findQuestionsByQuestionnairesId(id);
         return new ResponseEntity<>(tags, HttpStatus.OK);
     }
+
     /**
      * Ανάκτηση ερώτησης απο το id της με παράμετρο
      */
@@ -150,5 +151,18 @@ public class QuestionController {
 //    }
 //
 
+    @DeleteMapping("/forms/{formsId}/questions/{questionsId}")
+    public ResponseEntity<HttpStatus> deleteTagFromTutorial(@PathVariable(value = "formsId") Long formsId, @PathVariable(value = "questionsId") Long questionsId) {
+    Questionnaire questionnaire = questionnaireRepository.findById(formsId)
+                .orElseThrow(() -> new ResourceNotFoundException("questionnaire","id" ,formsId));
+
+        questionnaire.remove(questionsId);
+        questionnaireRepository.save(questionnaire);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 
 }
+
+
