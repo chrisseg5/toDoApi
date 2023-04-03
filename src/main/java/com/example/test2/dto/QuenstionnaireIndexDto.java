@@ -6,6 +6,15 @@ public class QuenstionnaireIndexDto {
     private Long id;
     private String name;
     private Date date;
+    private Long grading;
+
+    public Long getGrading() {
+        return grading;
+    }
+
+    public void setGrading(Long grading) {
+        this.grading = grading;
+    }
 
     public Long getId() {
         return id;
