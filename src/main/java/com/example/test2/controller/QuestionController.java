@@ -117,7 +117,6 @@ public class QuestionController {
     @DeleteMapping("/question/delete")
     public ResponseEntity<HttpStatus> deleteQuestion(@RequestParam long id) {
         questionRepository.deleteById(id);
-
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

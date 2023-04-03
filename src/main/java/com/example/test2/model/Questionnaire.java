@@ -19,6 +19,7 @@ public class Questionnaire {
     private long id;
     @NotEmpty
     String name;
+    private long grading;
 
     @CreationTimestamp
     @Temporal(TemporalType.DATE)
@@ -37,11 +38,20 @@ public class Questionnaire {
     public Questionnaire() {
     }
 
-    public Questionnaire( String name, Date date) {
+    public Questionnaire( String name, Date date , long graning) {
 
         this.name = name;
+        this.grading = graning ;
         this.date = date;
 
+    }
+
+    public long getGrading() {
+        return grading;
+    }
+
+    public void setGrading(long grading) {
+        this.grading = grading;
     }
 
     public Date getDate() {
