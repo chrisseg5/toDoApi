@@ -14,5 +14,6 @@ public interface QuestionnaireService {
     List<QuenstionnaireIndexDto> allQuestionnaires();
     Questionnaire getQuestionnaireById(long id);
     Questionnaire updateQuestionnaire(long id);
+    Questionnaire saveQ(Questionnaire questionnaire);
 
 }

@@ -56,6 +56,11 @@ public class QuestionServiceImpl implements QuestionService {
                 .orElseThrow(() -> new ResourceNotFoundException("question","Id",id) );
     }
 
+    @Override
+    public Question findQuestionById(long questionId) {
+        return questionRepository.findQuestionById(questionId);
+    }
+
 
     /**
      * Ορισμός των πεδίων που έρχονται στο index dto
@@ -67,15 +72,7 @@ public class QuestionServiceImpl implements QuestionService {
 
         );
     }
-//    @Override
-//    public Page<QuestionIndexDto> questionIndex(QuestionArgs args, Pageable pageable) {
-//        QQuestion qQuestion=QQuestion.question;
-//        FactoryExpression<QuestionIndexDto> factoryExpression = questionIndexDtoExpression(qQuestion) ;
-//        JPQLQuery<QuestionIndexDto> query = queryFactory
-//                .select(factoryExpression)
-//                .from(qQuestion);
-//        return  questionRepository.findAll(query,pageable);
-//    }
+
 
 
 }

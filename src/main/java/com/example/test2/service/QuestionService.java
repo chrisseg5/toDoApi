@@ -22,6 +22,7 @@ public interface QuestionService {
     Question getQuestionById(long id);
 
     Question updateQuestion(long id);
+    Question findQuestionById(long questionId);
 
 
 

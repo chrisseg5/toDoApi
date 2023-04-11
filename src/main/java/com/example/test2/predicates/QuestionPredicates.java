@@ -6,8 +6,6 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
 
-
-
 public class QuestionPredicates {
     /**
      * Ονομασία (startsWith)
@@ -15,11 +13,13 @@ public class QuestionPredicates {
     public static BooleanExpression nameStartsWith(final String name) {
         return QQuestion.question.questionText.upper().like(name + "%");
     }
+
     /**
      * Κριτήρια ευρετηρίου
      */
     public static BooleanBuilder createQuestionIndexPredicate(QuestionArgs args) {
         BooleanBuilder predicate = new BooleanBuilder();
+
 
         return predicate;
     }

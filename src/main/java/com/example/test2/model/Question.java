@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -22,6 +23,7 @@ public class Question {
     @Column(name = "question_text")
     String questionText;
     @OneToMany(mappedBy = "question")
+    @JsonIgnore
     private List<Answer> answerList=new ArrayList<>();
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
@@ -31,6 +33,9 @@ public class Question {
             mappedBy = "questionList")
     @JsonIgnore
     private List<Questionnaire> questionnaires = new ArrayList<>() ;
+    @OneToMany(mappedBy = "question" , cascade = CascadeType.ALL)
+
+    private Collection<Grading> gradings = new ArrayList<>();
 
     public Question() {
     }
@@ -72,5 +77,13 @@ public class Question {
 
     public void setQuestionnaires(List<Questionnaire> questionnaires) {
         this.questionnaires = questionnaires;
+    }
+
+    public Collection<Grading> getGradings() {
+        return gradings;
+    }
+
+    public void setGradings(Collection<Grading> gradings) {
+        this.gradings = gradings;
     }
 }

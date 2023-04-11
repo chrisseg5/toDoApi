@@ -29,7 +29,7 @@ public class QuestionnaireController {
 
 
     // -------------- Save a Questionnaire ---------------//
-    @PostMapping(value = "/questionnaires", consumes = {MediaType.ALL_VALUE})
+    @PostMapping(value = "/questionnaire", consumes = {MediaType.ALL_VALUE})
     @ResponseBody
     public Questionnaire createQuestionnaire(@RequestBody @Valid  Questionnaire questionnaire) {
         Questionnaire _questionnaire = questionnaireService.createQuestionnaire(questionnaire);
@@ -59,6 +59,8 @@ public class QuestionnaireController {
     public ResponseEntity<Questionnaire> updateQuestionnaire(@PathVariable("id") long id, @RequestBody Questionnaire questionnaire) {
         Questionnaire _questionnaire = questionnaireService.updateQuestionnaire(id);
         _questionnaire.setName(questionnaire.getName());
+        _questionnaire.setGrading(questionnaire.getGrading());
+        _questionnaire.setQuestionList(questionnaire.getQuestionList());
         return new ResponseEntity<>(questionnaireRepository.save(_questionnaire), HttpStatus.OK);
     }
 
@@ -68,5 +70,10 @@ public class QuestionnaireController {
     public ResponseEntity<HttpStatus> deleteQuestionnaire(@PathVariable("id") long id) {
         questionnaireRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/new/q")
+    public ResponseEntity<?> saveQ(@RequestBody Questionnaire questionnaire) {
+        return new ResponseEntity<>(questionnaireService.saveQ(questionnaire), HttpStatus.CREATED);
     }
 }

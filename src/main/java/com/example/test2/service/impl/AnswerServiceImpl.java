@@ -1,8 +1,7 @@
 package com.example.test2.service.impl;
 
-import com.example.test2.exception.ResourceNotFoundException;
+
 import com.example.test2.model.Answer;
-import com.example.test2.model.Question;
 import com.example.test2.repository.AnswerRepository;
 import com.example.test2.repository.QuestionRepository;
 import com.example.test2.service.AnswerService;
@@ -30,10 +29,8 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public List<Answer> getAllAnswersById(long id) {
 
-        return  answerRepository.findByQuestionId(id);
+        return answerRepository.findByQuestionId(id);
     }
-
-
 
 
 }

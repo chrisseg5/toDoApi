@@ -48,9 +48,9 @@ public class QuestionController {
 //    }
 
 
-//    /**
-//     * Δημιουργία ερώτησης με id ερωτηματολογιου
-//     */
+    /**
+     * Δημιουργία ερώτησης με id ερωτηματολογιου
+     */
 //@PostMapping("/questionnaires/{questionnaireId}/questions")
 //public ResponseEntity<Question> addQuestionToQuestionnaire (@PathVariable(value = "questionnaireId") Long questionnaireId, Question questionRequest){
 //    Question question = questionnaireRepository.findById(questionnaireId).map(questionnaire -> {
@@ -74,9 +74,7 @@ public class QuestionController {
 //    return new ResponseEntity<>(question, HttpStatus.CREATED);
 //}
 //
-    /**
-     * Δημιουργία  ερώτησης μεσω id του ερωτηματολογιου
-     */
+
 
 
     /**
@@ -149,7 +147,9 @@ public class QuestionController {
 //        return questionService.questionIndex(args, pageable);
 //    }
 //
-
+    /**
+     * Διαγραφή ερώτησης μονο απο ερωτηματολόγιο
+     */
     @DeleteMapping("/forms/{formsId}/questions/{questionsId}")
     public ResponseEntity<HttpStatus> deleteTagFromTutorial(@PathVariable(value = "formsId") Long formsId, @PathVariable(value = "questionsId") Long questionsId) {
     Questionnaire questionnaire = questionnaireRepository.findById(formsId)
@@ -161,6 +161,27 @@ public class QuestionController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @PostMapping("/questionnaires/{id}/questions")
+    public ResponseEntity<Question> addTag(@PathVariable(value = "id") Long id, @RequestBody Question questionRequest) {
+        Question question = questionnaireRepository.findById(id).map(questionnaire -> {
+            long questionId = questionRequest.getId();
+
+            // tag is existed
+            if (questionId != 0L) {
+                Question _question = questionRepository.findById(questionId)
+                        .orElseThrow(() -> new ResourceNotFoundException("question" , "id" , questionId));
+                questionnaire.addQuestion(_question);
+                questionnaireRepository.save(questionnaire);
+                return _question;
+            }
+
+            // add and create new Tag
+            questionnaire.addQuestion(questionRequest);
+            return questionRepository.save(questionRequest);
+        }).orElseThrow(() -> new ResourceNotFoundException("questionnaire" , "id" , id));
+
+        return new ResponseEntity<>(question, HttpStatus.CREATED);
+    }
 
 }
 

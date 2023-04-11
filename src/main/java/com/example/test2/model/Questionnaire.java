@@ -6,6 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +35,8 @@ public class Questionnaire {
             joinColumns = { @JoinColumn(name = "questionnaire_id") },
             inverseJoinColumns = { @JoinColumn(name = "question_id") })
     private List<Question> questionList = new ArrayList<>();
+    @OneToMany(mappedBy = "questionnaire", cascade = CascadeType.ALL)
+    private Collection<Grading> gradings = new ArrayList<>();
 
     public Questionnaire() {
     }
@@ -95,6 +98,14 @@ public class Questionnaire {
             this.questionList.remove(question);
             question.getQuestionnaires().remove(this);
         }
+    }
+
+    public Collection<Grading> getGradings() {
+        return gradings;
+    }
+
+    public void setGradings(Collection<Grading> gradings) {
+        this.gradings = gradings;
     }
 
 }
