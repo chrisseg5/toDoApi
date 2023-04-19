@@ -23,7 +23,7 @@ public class Question {
     @Column(name = "question_text")
     String questionText;
     @OneToMany(mappedBy = "question")
-    @JsonIgnore
+
     private List<Answer> answerList=new ArrayList<>();
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {

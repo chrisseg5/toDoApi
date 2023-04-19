@@ -28,6 +28,7 @@ public class QuestionServiceImpl implements QuestionService {
         BeanUtils.copyProperties(question, dto);
         dto.setQuestionText(question.getQuestionText());
         dto.setId(question.getId());
+
         return dto;
     }
 
@@ -59,6 +60,12 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question findQuestionById(long questionId) {
         return questionRepository.findQuestionById(questionId);
+    }
+
+    @Override
+    public List<Question> getQuestionsByIds(List<Long> questionIds) {
+        List<Question> questions= questionRepository.findAllById(questionIds);
+        return questions;
     }
 
 

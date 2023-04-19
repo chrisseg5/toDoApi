@@ -37,31 +37,18 @@ public class AnswerController {
     }
 
 
-    /**
-     * Δημιουργία  απάντησης μεσω id της ερώτησης με Request Param
-     */
-//    @PostMapping("/new/answer")
-//    public ResponseEntity<Answer> createAnswer(@RequestParam long id,
-//                                               @RequestBody Answer answerRequest) {
-//        Answer comment = questionRepository.findById(id).map(t -> {
-//            answerRequest.setQuestion(t);
-//            return answerRepository.save(answerRequest);
-//        }).orElseThrow(() -> new ResourceNotFoundException("question","Id",id));
-//
-//        return new ResponseEntity<>(comment, HttpStatus.CREATED);
-//    }
 
     /**
      * Δημιουργία  απάντησης μεσω id της ερώτησης
      */
     @PostMapping("/new/answer/{id}")
     public ResponseEntity<Answer> createAnswer(@PathVariable("id") long id, @RequestBody Answer answerRequest) {
-        Answer comment = questionRepository.findById(id).map(t -> {
+        Answer answer = questionRepository.findById(id).map(t -> {
             answerRequest.setQuestion(t);
             return answerRepository.save(answerRequest);
         }).orElseThrow(() -> new ResourceNotFoundException("question", "Id", id));
 
-        return new ResponseEntity<>(comment, HttpStatus.CREATED);
+        return new ResponseEntity<>(answer, HttpStatus.CREATED);
     }
 
 
@@ -70,17 +57,6 @@ public class AnswerController {
         List<Answer> persistedUser = answerRepository.saveAll(List.of(answer));
     }
 
-
-    /**
-     * Ανάκτηση απάντησης απο το id της
-     */
-//    @GetMapping("/answers/{id}")
-//    public ResponseEntity<Answer> getAnswer(@PathVariable(value = "id") Long id) {
-//        Answer answer = answerRepository.findById(id)
-//                .orElseThrow(() -> new ResourceNotFoundException("question","Id",id));
-//
-//        return new ResponseEntity<>(answer  , HttpStatus.OK);
-//    }
 
 
     /**

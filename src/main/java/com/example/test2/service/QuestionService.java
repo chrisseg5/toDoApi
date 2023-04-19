@@ -23,10 +23,6 @@ public interface QuestionService {
 
     Question updateQuestion(long id);
     Question findQuestionById(long questionId);
+    List<Question> getQuestionsByIds(List<Long> questionIds);
 
-
-
-//    Page<QuestionIndexDto> questionIndex(QuestionArgs args, Pageable pageable);
-
-//    List<Question> getAllQuestions();
 }

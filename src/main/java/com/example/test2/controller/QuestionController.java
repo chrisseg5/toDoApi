@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/api")
 @Controller
@@ -75,8 +76,6 @@ public class QuestionController {
 //}
 //
 
-
-
     /**
      * Ανάκτηση ερώτησης απο το id του ερωτηματολογιου
      */
@@ -85,8 +84,8 @@ public class QuestionController {
         if (!questionnaireRepository.existsById(id)) {
             throw new ResourceNotFoundException("questionnaire", "id", id);
         }
-        List<Question> tags = questionRepository.findQuestionsByQuestionnairesId(id);
-        return new ResponseEntity<>(tags, HttpStatus.OK);
+        List<Question> questions = questionRepository.findQuestionsByQuestionnairesId(id);
+        return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 
     /**
@@ -161,27 +160,7 @@ public class QuestionController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/questionnaires/{id}/questions")
-    public ResponseEntity<Question> addTag(@PathVariable(value = "id") Long id, @RequestBody Question questionRequest) {
-        Question question = questionnaireRepository.findById(id).map(questionnaire -> {
-            long questionId = questionRequest.getId();
 
-            // tag is existed
-            if (questionId != 0L) {
-                Question _question = questionRepository.findById(questionId)
-                        .orElseThrow(() -> new ResourceNotFoundException("question" , "id" , questionId));
-                questionnaire.addQuestion(_question);
-                questionnaireRepository.save(questionnaire);
-                return _question;
-            }
-
-            // add and create new Tag
-            questionnaire.addQuestion(questionRequest);
-            return questionRepository.save(questionRequest);
-        }).orElseThrow(() -> new ResourceNotFoundException("questionnaire" , "id" , id));
-
-        return new ResponseEntity<>(question, HttpStatus.CREATED);
-    }
 
 }
 
