@@ -1,6 +1,7 @@
 package com.example.test2.service.impl;
 
-import com.example.test2.dto.QuenstionnaireIndexDto;
+import com.example.test2.dto.index.QuenstionnaireIndexDto;
+import com.example.test2.dto.mini.QuestionnaireMiniDo;
 import com.example.test2.exception.ResourceNotFoundException;
 import com.example.test2.model.Grading;
 import com.example.test2.model.Question;
@@ -37,6 +38,15 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         dto.setGrading(questionnaire.getGrading());
         return dto;
     }
+    @Override
+    public QuestionnaireMiniDo toMiniDTO(Questionnaire questionnaire) {
+        QuestionnaireMiniDo dto = new QuestionnaireMiniDo();
+        BeanUtils.copyProperties(questionnaire, dto);
+        dto.setId(questionnaire.getId());
+        return dto;
+    }
+
+
 
     @Override
     public List<QuenstionnaireIndexDto> allQuestionnaires() {

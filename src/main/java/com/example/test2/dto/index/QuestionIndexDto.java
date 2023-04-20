@@ -1,4 +1,4 @@
-package com.example.test2.dto;
+package com.example.test2.dto.index;
 
 public class QuestionIndexDto {
     private Long id;

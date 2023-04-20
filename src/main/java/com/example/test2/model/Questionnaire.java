@@ -37,7 +37,8 @@ public class Questionnaire {
     private List<Question> questionList = new ArrayList<>();
     @OneToMany(mappedBy = "questionnaire", cascade = CascadeType.ALL)
     private Collection<Grading> gradings = new ArrayList<>();
-
+    @OneToMany(mappedBy = "questionnaire")
+    private List<Candidate> candidateList=new ArrayList<>();
     public Questionnaire() {
     }
 

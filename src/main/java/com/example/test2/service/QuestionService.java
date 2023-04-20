@@ -1,10 +1,7 @@
 package com.example.test2.service;
 
-import com.example.test2.args.QuestionArgs;
-import com.example.test2.dto.QuestionIndexDto;
+import com.example.test2.dto.index.QuestionIndexDto;
 import com.example.test2.model.Question;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 

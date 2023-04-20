@@ -1,9 +1,8 @@
 package com.example.test2.controller;
 
 
-import com.example.test2.dto.QuestionIndexDto;
+import com.example.test2.dto.index.QuestionIndexDto;
 import com.example.test2.exception.ResourceNotFoundException;
-import com.example.test2.model.Answer;
 import com.example.test2.model.Question;
 import com.example.test2.model.Questionnaire;
 import com.example.test2.repository.QuestionRepository;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequestMapping("/api")
 @Controller

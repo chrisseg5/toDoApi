@@ -1,5 +1,5 @@
 package com.example.test2.service.impl;
-import com.example.test2.dto.QuestionIndexDto;
+import com.example.test2.dto.index.QuestionIndexDto;
 import com.example.test2.exception.ResourceNotFoundException;
 import com.example.test2.model.QQuestion;
 import com.example.test2.model.Question;
