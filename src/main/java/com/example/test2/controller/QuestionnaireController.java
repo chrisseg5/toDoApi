@@ -131,6 +131,14 @@ public class QuestionnaireController {
         return new ResponseEntity<>(questionnaire, HttpStatus.CREATED);
     }
 
+    @PutMapping("/main/{id}")
+    public void setMainQuestionnaireId(@PathVariable Long id) {
+        questionnaireService.setMainQuestionnaireId(id);
+    }
+    @GetMapping("/main")
+    public Long getMainQuestionnaireId() {
+        return questionnaireService.getMainQuestionnaireId();
+    }
 
 
 

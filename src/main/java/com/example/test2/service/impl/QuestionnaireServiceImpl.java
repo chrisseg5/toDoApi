@@ -23,6 +23,8 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     private QuestionnaireRepository questionnaireRepository;
     @Autowired
     private QuestionService questionService;
+    private Long mainQuestionnaireId;
+
 
     @Override
     public Questionnaire createQuestionnaire(Questionnaire questionnaire) {
@@ -85,6 +87,18 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
                 .collect(Collectors.toList())
         ));
         return questionnaireRepository.save(newQuestionnaire);
+    }
+
+    @Override
+    public Long getMainQuestionnaireId() {
+        return mainQuestionnaireId;
+    }
+
+    @Override
+    public void setMainQuestionnaireId(Long id) {
+        Questionnaire questionnaire = questionnaireRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid questionnaire ID: " + id));
+        mainQuestionnaireId = questionnaire.getId();
     }
 
 }

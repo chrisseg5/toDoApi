@@ -19,5 +19,7 @@ public interface QuestionnaireService {
     Questionnaire getQuestionnaireById(long id);
     Questionnaire updateQuestionnaire(long id);
     Questionnaire saveQ(Questionnaire questionnaire);
+    Long getMainQuestionnaireId () ;
 
+    void  setMainQuestionnaireId(Long id);
 }
