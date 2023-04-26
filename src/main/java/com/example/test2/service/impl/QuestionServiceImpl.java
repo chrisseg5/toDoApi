@@ -1,9 +1,12 @@
 package com.example.test2.service.impl;
 import com.example.test2.dto.index.QuestionIndexDto;
 import com.example.test2.exception.ResourceNotFoundException;
+import com.example.test2.model.Answer;
 import com.example.test2.model.QQuestion;
 import com.example.test2.model.Question;
+import com.example.test2.model.Questionnaire;
 import com.example.test2.repository.QuestionRepository;
+import com.example.test2.repository.QuestionnaireRepository;
 import com.example.test2.service.QuestionService;
 import com.querydsl.core.types.FactoryExpression;
 import com.querydsl.core.types.Projections;
@@ -20,7 +23,6 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     private QuestionRepository questionRepository;
-
 
     @Override
     public QuestionIndexDto toDTO(Question question) {
@@ -67,7 +69,6 @@ public class QuestionServiceImpl implements QuestionService {
         List<Question> questions= questionRepository.findAllById(questionIds);
         return questions;
     }
-
 
     /**
      * Ορισμός των πεδίων που έρχονται στο index dto

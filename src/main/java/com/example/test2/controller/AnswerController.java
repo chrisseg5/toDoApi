@@ -2,6 +2,7 @@ package com.example.test2.controller;
 
 import com.example.test2.exception.ResourceNotFoundException;
 import com.example.test2.model.Answer;
+import com.example.test2.model.Question;
 import com.example.test2.repository.AnswerRepository;
 import com.example.test2.repository.QuestionRepository;
 import com.example.test2.service.AnswerService;
@@ -24,6 +25,8 @@ public class AnswerController {
     @Autowired
     private QuestionRepository questionRepository;
 
+    private Question question;
+
     /**
      * Ανάκτηση απαντήσεων απο το id της ερώτησης
      */
@@ -38,18 +41,53 @@ public class AnswerController {
 
 
 
-    /**
-     * Δημιουργία  απάντησης μεσω id της ερώτησης
-     */
+//    /**
+//     * Δημιουργία  απάντησης μεσω id της ερώτησης
+//     */
+//    @PostMapping("/new/answer/{id}")
+//    public ResponseEntity<Answer> createAnswer(@PathVariable("id") long id, @RequestBody Answer answerRequest) {
+//        Answer answer = questionRepository.findById(id).map(t -> {
+//            answerRequest.setQuestion(t);
+//            return answerRepository.save(answerRequest);
+//
+//        }).orElseThrow(() -> new ResourceNotFoundException("question", "Id", id));
+//
+//        return new ResponseEntity<>(answer, HttpStatus.CREATED);
+//    }
+
+
+
+
+
+
+
+
     @PostMapping("/new/answer/{id}")
     public ResponseEntity<Answer> createAnswer(@PathVariable("id") long id, @RequestBody Answer answerRequest) {
-        Answer answer = questionRepository.findById(id).map(t -> {
-            answerRequest.setQuestion(t);
-            return answerRepository.save(answerRequest);
-        }).orElseThrow(() -> new ResourceNotFoundException("question", "Id", id));
+        Question question = questionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("question", "Id", id));
 
-        return new ResponseEntity<>(answer, HttpStatus.CREATED);
+        answerRequest.setQuestion(question);
+        Answer savedAnswer = answerRepository.save(answerRequest);
+
+        // update question type based on answers
+        List<Answer> answers = question.getAnswerList();
+        if (answers.stream().filter(Answer::isCorrect).count() > 1) {
+            question.setType("type 2");
+        } else {
+            question.setType("type 1");
+        }
+        questionRepository.save(question);
+
+        return new ResponseEntity<>(savedAnswer, HttpStatus.CREATED);
     }
+
+
+
+
+
+
+
 
 
     @PostMapping("/register")

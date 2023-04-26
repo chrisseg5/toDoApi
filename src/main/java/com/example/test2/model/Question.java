@@ -22,9 +22,12 @@ public class Question {
     @NotEmpty
     @Column(name = "question_text")
     String questionText;
+    @Column(name = "type")
+    private String type;
     @OneToMany(mappedBy = "question")
 
     private List<Answer> answerList=new ArrayList<>();
+
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
@@ -33,9 +36,7 @@ public class Question {
             mappedBy = "questionList")
     @JsonIgnore
     private List<Questionnaire> questionnaires = new ArrayList<>() ;
-    @OneToMany(mappedBy = "question" , cascade = CascadeType.ALL)
 
-    private Collection<Grading> gradings = new ArrayList<>();
 
     public Question() {
     }
@@ -45,6 +46,14 @@ public class Question {
     }
 
     public Question(String questionText, boolean b) {
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public long getId() {
@@ -79,11 +88,4 @@ public class Question {
         this.questionnaires = questionnaires;
     }
 
-    public Collection<Grading> getGradings() {
-        return gradings;
-    }
-
-    public void setGradings(Collection<Grading> gradings) {
-        this.gradings = gradings;
-    }
 }

@@ -2,6 +2,7 @@ package com.example.test2.service;
 
 import com.example.test2.dto.index.QuestionIndexDto;
 import com.example.test2.model.Question;
+import com.example.test2.model.Questionnaire;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -21,5 +22,4 @@ public interface QuestionService {
     Question updateQuestion(long id);
     Question findQuestionById(long questionId);
     List<Question> getQuestionsByIds(List<Long> questionIds);
-
 }

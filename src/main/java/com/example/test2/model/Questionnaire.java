@@ -5,10 +5,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "questionnaire")
@@ -35,19 +32,34 @@ public class Questionnaire {
             joinColumns = { @JoinColumn(name = "questionnaire_id") },
             inverseJoinColumns = { @JoinColumn(name = "question_id") })
     private List<Question> questionList = new ArrayList<>();
-    @OneToMany(mappedBy = "questionnaire", cascade = CascadeType.ALL)
-    private Collection<Grading> gradings = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(name="questionnaire_question_grades",
+            joinColumns=@JoinColumn(name="questionnaire_question_id"))
+    @MapKeyJoinColumn(name="question_id")
+    @Column(name="grade")
+    private Map<Question, Integer> grades = new HashMap<>();
+
+
     @OneToMany(mappedBy = "questionnaire")
     private List<Candidate> candidateList=new ArrayList<>();
     public Questionnaire() {
     }
 
-    public Questionnaire( String name, Date date , long graning) {
+    public Questionnaire( String name, Date date , long graning ,Map<Question, Integer> grades) {
 
         this.name = name;
         this.grading = graning ;
         this.date = date;
+        this.grades = grades ;
 
+    }
+
+    public Map<Question, Integer> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(Map<Question, Integer> grades) {
+        this.grades = grades;
     }
 
     public long getGrading() {
@@ -101,12 +113,5 @@ public class Questionnaire {
         }
     }
 
-    public Collection<Grading> getGradings() {
-        return gradings;
-    }
-
-    public void setGradings(Collection<Grading> gradings) {
-        this.gradings = gradings;
-    }
 
 }
