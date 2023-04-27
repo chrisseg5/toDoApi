@@ -5,6 +5,7 @@ import com.example.test2.dto.gradeDto.QuestionnaireGradeDto;
 import com.example.test2.dto.index.GradeDTO;
 import com.example.test2.dto.index.QuenstionnaireIndexDto;
 import com.example.test2.exception.ResourceNotFoundException;
+import com.example.test2.model.Answer;
 import com.example.test2.model.Question;
 import com.example.test2.model.Questionnaire;
 
@@ -68,6 +69,22 @@ public class QuestionnaireController {
         _questionnaire.setName(questionnaire.getName());
         _questionnaire.setGrading(questionnaire.getGrading());
         _questionnaire.setQuestionList(questionnaire.getQuestionList());
+
+
+        for (Question question : _questionnaire.getQuestionList()) {
+            int trueAnswerCount = 0;
+            for (Answer answer : question.getAnswerList()) {
+                if (answer.isCorrect()) {
+                    trueAnswerCount++;
+                }
+            }
+            if (trueAnswerCount <= 1) {
+                question.setType("type 2");
+            } else {
+                question.setType("type 1");
+            }
+        }
+
         return new ResponseEntity<>(questionnaireRepository.save(_questionnaire), HttpStatus.OK);
     }
 
@@ -115,18 +132,12 @@ public class QuestionnaireController {
         if (questionnaire == null) {
             return ResponseEntity.notFound().build();
         }
-
-        // Retrieve the questions from the service
         List<Question> questions = questionService.getQuestionsByIds(questionIds);
         if (questions == null || questions.isEmpty()) {
 
         }
-
-        // Append the new questions to the existing questions in the questionnaire
         List<Question> existingQuestions = questionnaire.getQuestionList();
         existingQuestions.addAll(questions);
-
-        // Save the updated questionnaire
         Questionnaire updatedQuestionnaire = questionnaireService.createQuestionnaire(questionnaire);
 
         return new ResponseEntity<>(questionnaire, HttpStatus.CREATED);
