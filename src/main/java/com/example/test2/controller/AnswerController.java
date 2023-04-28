@@ -40,28 +40,6 @@ public class AnswerController {
     }
 
 
-
-//    /**
-//     * Δημιουργία  απάντησης μεσω id της ερώτησης
-//     */
-//    @PostMapping("/new/answer/{id}")
-//    public ResponseEntity<Answer> createAnswer(@PathVariable("id") long id, @RequestBody Answer answerRequest) {
-//        Answer answer = questionRepository.findById(id).map(t -> {
-//            answerRequest.setQuestion(t);
-//            return answerRepository.save(answerRequest);
-//
-//        }).orElseThrow(() -> new ResourceNotFoundException("question", "Id", id));
-//
-//        return new ResponseEntity<>(answer, HttpStatus.CREATED);
-//    }
-
-
-
-
-
-
-
-
     @PostMapping("/new/answer/{id}")
     public ResponseEntity<Answer> createAnswer(@PathVariable("id") long id, @RequestBody Answer answerRequest) {
         Question question = questionRepository.findById(id)

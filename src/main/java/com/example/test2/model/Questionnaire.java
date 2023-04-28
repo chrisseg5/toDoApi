@@ -32,35 +32,50 @@ public class Questionnaire {
             joinColumns = { @JoinColumn(name = "questionnaire_id") },
             inverseJoinColumns = { @JoinColumn(name = "question_id") })
     private List<Question> questionList = new ArrayList<>();
-    @ElementCollection
-    @CollectionTable(name="questionnaire_question_grades",
-            joinColumns=@JoinColumn(name="questionnaire_question_id"))
-    @MapKeyJoinColumn(name="question_id")
-    @Column(name="grade")
-    private Map<Question, Integer> grades = new HashMap<>();
+//    @ElementCollection
+//    @CollectionTable(name="questionnaire_question_grades",
+//            joinColumns=@JoinColumn(name="questionnaire_question_id"))
+//    @MapKeyJoinColumn(name="question_id")
+//    @Column(name="grade")
+//    private Map<Question, Integer> grades = new HashMap<>();
 
 
     @OneToMany(mappedBy = "questionnaire")
     private List<Candidate> candidateList=new ArrayList<>();
+
+
+
+    @OneToMany(mappedBy = "questionnaire")
+    private Set<Gradingg> gradingg;
+
+
+    public Set<Gradingg> getGradingg() {
+        return gradingg;
+    }
+
+    public void setGradingg(Set<Gradingg> gradingg) {
+        this.gradingg = gradingg;
+    }
+
     public Questionnaire() {
     }
 
-    public Questionnaire( String name, Date date , long graning ,Map<Question, Integer> grades) {
+    public Questionnaire( String name, Date date , long graning ) {
 
         this.name = name;
         this.grading = graning ;
         this.date = date;
-        this.grades = grades ;
+//        this.grades = grades ;
 
     }
 
-    public Map<Question, Integer> getGrades() {
-        return grades;
-    }
-
-    public void setGrades(Map<Question, Integer> grades) {
-        this.grades = grades;
-    }
+//    public Map<Question, Integer> getGrades() {
+//        return grades;
+//    }
+//
+//    public void setGrades(Map<Question, Integer> grades) {
+//        this.grades = grades;
+//    }
 
     public long getGrading() {
         return grading;

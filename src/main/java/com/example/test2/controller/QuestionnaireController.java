@@ -1,14 +1,10 @@
 package com.example.test2.controller;
-
-import com.example.test2.dto.gradeDto.QuestionGradeDto;
-import com.example.test2.dto.gradeDto.QuestionnaireGradeDto;
 import com.example.test2.dto.index.GradeDTO;
 import com.example.test2.dto.index.QuenstionnaireIndexDto;
 import com.example.test2.exception.ResourceNotFoundException;
 import com.example.test2.model.Answer;
 import com.example.test2.model.Question;
 import com.example.test2.model.Questionnaire;
-
 import com.example.test2.repository.QuestionRepository;
 import com.example.test2.repository.QuestionnaireRepository;
 import com.example.test2.service.QuestionService;
@@ -18,9 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -45,6 +39,7 @@ public class QuestionnaireController {
         return _questionnaire;
 
     }
+
 
     // ----------------Get all Questionnaires -------------//
 
@@ -154,32 +149,32 @@ public class QuestionnaireController {
     }
 
 
-    @PostMapping("/grades")
-    public ResponseEntity<?> addGrade(@RequestBody GradeDTO gradeDTO) {
-        // retrieve the questionnaire and question entities
-        Questionnaire questionnaire = questionnaireRepository.findById(gradeDTO.getQuestionnaireId()).orElseThrow(() -> new ResourceNotFoundException("Questionnaire", "id", 1));
-        Question question = questionRepository.findById(gradeDTO.getQuestionId()).orElseThrow(() -> new ResourceNotFoundException("Questionnaire", "id", 2));
-
-        // add the grade to the join table
-        questionnaire.getGrades().put(question, gradeDTO.getGrade());
-        questionnaireRepository.save(questionnaire);
-
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/{questionnaireId}/questions/{questionId}/grades")
-    public ResponseEntity<Integer> getGrade(@PathVariable Long questionnaireId, @PathVariable Long questionId) {
-        Questionnaire questionnaire = questionnaireRepository.findById(questionnaireId).orElseThrow(() -> new ResourceNotFoundException("Questionnaire", "id", questionnaireId));
-        Question question = questionRepository.findById(questionId).orElseThrow(() -> new ResourceNotFoundException("Question", "id", questionId));
-
-        Integer grade = questionnaire.getGrades().get(question);
-
-        if (grade != null) {
-            return ResponseEntity.ok().body(grade);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+//    @PostMapping("/grades")
+//    public ResponseEntity<?> addGrade(@RequestBody GradeDTO gradeDTO) {
+//
+//        Questionnaire questionnaire = questionnaireRepository.findById(gradeDTO.getQuestionnaireId()).orElseThrow(() -> new ResourceNotFoundException("Questionnaire", "id", 1));
+//        Question question = questionRepository.findById(gradeDTO.getQuestionId()).orElseThrow(() -> new ResourceNotFoundException("Questionnaire", "id", 2));
+//
+//
+//        questionnaire.getGrades().put(question, gradeDTO.getGrade());
+//        questionnaireRepository.save(questionnaire);
+//
+//        return ResponseEntity.ok().build();
+//    }
+//
+//    @GetMapping("/{questionnaireId}/questions/{questionId}/grades")
+//    public ResponseEntity<Integer> getGrade(@PathVariable Long questionnaireId, @PathVariable Long questionId) {
+//        Questionnaire questionnaire = questionnaireRepository.findById(questionnaireId).orElseThrow(() -> new ResourceNotFoundException("Questionnaire", "id", questionnaireId));
+//        Question question = questionRepository.findById(questionId).orElseThrow(() -> new ResourceNotFoundException("Question", "id", questionId));
+//
+//        Integer grade = questionnaire.getGrades().get(question);
+//
+//        if (grade != null) {
+//            return ResponseEntity.ok().body(grade);
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 }
 
 

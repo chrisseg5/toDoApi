@@ -10,6 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "question")
@@ -37,6 +38,16 @@ public class Question {
     @JsonIgnore
     private List<Questionnaire> questionnaires = new ArrayList<>() ;
 
+    @OneToMany(mappedBy = "question")
+    private Set<Gradingg> gradingg;
+
+    public Set<Gradingg> getGradingg() {
+        return gradingg;
+    }
+
+    public void setGradingg(Set<Gradingg> gradingg) {
+        this.gradingg = gradingg;
+    }
 
     public Question() {
     }
