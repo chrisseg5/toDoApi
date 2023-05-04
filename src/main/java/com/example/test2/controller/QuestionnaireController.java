@@ -1,6 +1,7 @@
 package com.example.test2.controller;
 import com.example.test2.dto.index.GradeDTO;
 import com.example.test2.dto.index.QuenstionnaireIndexDto;
+import com.example.test2.dto.mini.QuestionnaireMiniDto;
 import com.example.test2.exception.ResourceNotFoundException;
 import com.example.test2.model.Answer;
 import com.example.test2.model.Question;
@@ -47,6 +48,11 @@ public class QuestionnaireController {
     @ResponseBody
     public List<QuenstionnaireIndexDto> allQuestionnaire() {
         return questionnaireService.allQuestionnaires();
+    }
+    @GetMapping(value = "/all/mini/questionnaires", produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public List<QuestionnaireMiniDto> allMiniQuestionnaire() {
+        return questionnaireService.allQuestionnairesMini();
     }
 
 

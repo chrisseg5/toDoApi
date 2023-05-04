@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/api")
 @RestController
@@ -25,6 +27,7 @@ public class CandidateController {
     private CandidateService candidateService;
     @Autowired
     private QuestionnaireRepository questionnaireRepository;
+
 
     @PostMapping("/newCandidate")
     public ResponseEntity<Candidate> createCandidate(@RequestBody Candidate candidate, @RequestParam Long questionnaireId) {
@@ -38,7 +41,7 @@ public class CandidateController {
 
         return new ResponseEntity<>(savedCandidate, HttpStatus.CREATED);
     }
-
+// ---------------- Post Candidates -------------------//
 
     @PostMapping("/new/candidate/{id}")
     public ResponseEntity<Candidate> createCandidate(@PathVariable("id") long id, @RequestBody Candidate candidateRequest) {
@@ -49,5 +52,23 @@ public class CandidateController {
 
         return new ResponseEntity<>(candidate, HttpStatus.CREATED);
     }
+    // ----------------Get Candidates -------------------//
+    @GetMapping("/all/candidates")
+    public ResponseEntity<List<Candidate>> getAllCandidates() {
+        List<Candidate> candidates = candidateRepository.findAll();
+        return new ResponseEntity<>(candidates, HttpStatus.OK);
+    }
 
+    // ----------------Get Questionnaire By Candidate id -------------------//
+    @GetMapping("/candidates/{id}/questionnaire")
+    public ResponseEntity<Questionnaire> getQuestionnaireByCandidateId(@PathVariable("id") long candidateId) {
+        Optional<Candidate> candidateOptional = candidateRepository.findById(candidateId);
+        if (candidateOptional.isPresent()) {
+            Candidate candidate = candidateOptional.get();
+            Questionnaire questionnaire = candidate.getQuestionnaire();
+            return ResponseEntity.ok(questionnaire);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

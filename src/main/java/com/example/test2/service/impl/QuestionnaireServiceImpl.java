@@ -1,9 +1,8 @@
 package com.example.test2.service.impl;
 
 import com.example.test2.dto.index.QuenstionnaireIndexDto;
-import com.example.test2.dto.mini.QuestionnaireMiniDo;
+import com.example.test2.dto.mini.QuestionnaireMiniDto;
 import com.example.test2.exception.ResourceNotFoundException;
-import com.example.test2.model.Question;
 import com.example.test2.model.Questionnaire;
 import com.example.test2.repository.QuestionnaireRepository;
 import com.example.test2.service.QuestionService;
@@ -12,7 +11,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.Collectors;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,19 +38,24 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         return dto;
     }
     @Override
-    public QuestionnaireMiniDo toMiniDTO(Questionnaire questionnaire) {
-        QuestionnaireMiniDo dto = new QuestionnaireMiniDo();
+    public QuestionnaireMiniDto toMiniDto(Questionnaire questionnaire) {
+        QuestionnaireMiniDto dto = new QuestionnaireMiniDto();
         BeanUtils.copyProperties(questionnaire, dto);
         dto.setId(questionnaire.getId());
+        dto.setName(questionnaire.getName());
         return dto;
     }
-
-
-
     @Override
     public List<QuenstionnaireIndexDto> allQuestionnaires() {
         List<QuenstionnaireIndexDto> questionnaires = new ArrayList<>();
         questionnaireRepository.findAll().stream().forEach(questionnaire -> questionnaires.add(toDTO(questionnaire)));
+        return questionnaires;
+    }
+
+    @Override
+    public List<QuestionnaireMiniDto> allQuestionnairesMini() {
+        List<QuestionnaireMiniDto> questionnaires = new ArrayList<>();
+        questionnaireRepository.findAll().stream().forEach(questionnaire -> questionnaires.add(toMiniDto(questionnaire)));
         return questionnaires;
     }
 
