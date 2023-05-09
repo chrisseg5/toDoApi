@@ -1,5 +1,6 @@
 package com.example.test2.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.validation.annotation.Validated;
 
@@ -32,6 +33,8 @@ public class Questionnaire {
             joinColumns = { @JoinColumn(name = "questionnaire_id") },
             inverseJoinColumns = { @JoinColumn(name = "question_id") })
     private List<Question> questionList = new ArrayList<>();
+
+
 //    @ElementCollection
 //    @CollectionTable(name="questionnaire_question_grades",
 //            joinColumns=@JoinColumn(name="questionnaire_question_id"))
@@ -44,27 +47,27 @@ public class Questionnaire {
     private List<Candidate> candidateList=new ArrayList<>();
 
 
-
     @OneToMany(mappedBy = "questionnaire")
-    private Set<Gradingg> gradingg;
+    @JsonIgnore
+    private List<Grading> gradings;
 
-
-    public Set<Gradingg> getGradingg() {
-        return gradingg;
+    public List<Grading> getGradings() {
+        return gradings;
     }
 
-    public void setGradingg(Set<Gradingg> gradingg) {
-        this.gradingg = gradingg;
+    public void setGradings(List<Grading> gradings) {
+        this.gradings = gradings;
     }
 
     public Questionnaire() {
     }
 
-    public Questionnaire( String name, Date date , long graning ) {
+    public Questionnaire(String name, Date date , long graning ) {
 
         this.name = name;
         this.grading = graning ;
         this.date = date;
+
 //        this.grades = grades ;
 
     }

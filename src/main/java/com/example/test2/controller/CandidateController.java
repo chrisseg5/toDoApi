@@ -71,4 +71,11 @@ public class CandidateController {
             return ResponseEntity.notFound().build();
         }
     }
+    // ----------------Get By id -------------------//
+    @GetMapping("/candidates/{id}")
+    public ResponseEntity<Candidate> getCandidateById(@PathVariable(value = "id") Long candidateId) {
+        Candidate candidate = candidateRepository.findById(candidateId)
+                .orElseThrow(() -> new ResourceNotFoundException("Candidate", "id", candidateId));
+        return ResponseEntity.ok().body(candidate);
+    }
 }

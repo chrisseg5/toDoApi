@@ -38,15 +38,17 @@ public class Question {
     @JsonIgnore
     private List<Questionnaire> questionnaires = new ArrayList<>() ;
 
-    @OneToMany(mappedBy = "question")
-    private Set<Gradingg> gradingg;
 
-    public Set<Gradingg> getGradingg() {
-        return gradingg;
+    @OneToMany(mappedBy = "question")
+    @JsonIgnore
+    private List<Grading> gradings;
+
+    public List<Grading> getGradings() {
+        return gradings;
     }
 
-    public void setGradingg(Set<Gradingg> gradingg) {
-        this.gradingg = gradingg;
+    public void setGradings(List<Grading> gradings) {
+        this.gradings = gradings;
     }
 
     public Question() {

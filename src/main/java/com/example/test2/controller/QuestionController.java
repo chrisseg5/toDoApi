@@ -34,45 +34,7 @@ public class QuestionController {
     @Autowired
     private QuestionnaireRepository questionnaireRepository;
 
-    /**
-     * Ανάκτηση ερώτησης απο το id της
-     */
-//    @GetMapping("/question/{id}")
-//    public ResponseEntity<Question> getQuestionById(@PathVariable("id") long id) {
-//        Question question = questionRepository.findById(id)
-//                .orElseThrow(() -> new ResourceNotFoundException("question","Id",id));
-//
-//        return new ResponseEntity<>(question, HttpStatus.OK);
-//
-//    }
 
-
-    /**
-     * Δημιουργία ερώτησης με id ερωτηματολογιου
-     */
-//@PostMapping("/questionnaires/{questionnaireId}/questions")
-//public ResponseEntity<Question> addQuestionToQuestionnaire (@PathVariable(value = "questionnaireId") Long questionnaireId, Question questionRequest){
-//    Question question = questionnaireRepository.findById(questionnaireId).map(questionnaire -> {
-//        long questionId = questionRequest.getId();
-//
-//
-//        // question is existed
-//        if(questionId != 0L) {
-//            Question _question = questionRepository.findById(questionId)
-//                    .orElseThrow(() -> new ResourceNotFoundException("question", "Id", questionId ));
-//            questionnaire.addQuestion(_question);
-//            questionnaireRepository.save(questionnaire);
-//            return _question;
-//        }
-//
-//        //add and create new question
-//        questionnaire.addQuestion(questionRequest);
-//        return questionRepository.save(questionRequest);
-//
-//    } ).orElseThrow(() -> new ResourceNotFoundException("questionnaire","id", questionnaireId));
-//    return new ResponseEntity<>(question, HttpStatus.CREATED);
-//}
-//
 
     /**
      * Ανάκτηση ερώτησης απο το id του ερωτηματολογιου
@@ -137,13 +99,6 @@ public class QuestionController {
         return questionService.allQuestions();
     }
 
-
-//
-//    @PostMapping(value = "/index", produces = "application/json;charset=UTF-8")
-//    public Page<QuestionIndexDto> campaignIndex(Pageable pageable, @RequestBody QuestionArgs args) {
-//        return questionService.questionIndex(args, pageable);
-//    }
-//
     /**
      * Διαγραφή ερώτησης μονο απο ερωτηματολόγιο
      */
