@@ -3,10 +3,13 @@ package com.example.test2.controller;
 
 import com.example.test2.dto.index.QuestionIndexDto;
 import com.example.test2.exception.ResourceNotFoundException;
+import com.example.test2.model.Grading;
 import com.example.test2.model.Question;
 import com.example.test2.model.Questionnaire;
+import com.example.test2.repository.GradingRepository;
 import com.example.test2.repository.QuestionRepository;
 import com.example.test2.repository.QuestionnaireRepository;
+import com.example.test2.service.GradingService;
 import com.example.test2.service.QuestionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/api")
 @Controller
@@ -33,6 +37,13 @@ public class QuestionController {
     private QuestionService questionService;
     @Autowired
     private QuestionnaireRepository questionnaireRepository;
+    @Autowired
+    private GradingService gradingService;
+
+
+
+    @Autowired
+    private GradingRepository gradingRepository;
 
 
 
@@ -103,12 +114,15 @@ public class QuestionController {
      * Διαγραφή ερώτησης μονο απο ερωτηματολόγιο
      */
     @DeleteMapping("/forms/{formsId}/questions/{questionsId}")
-    public ResponseEntity<HttpStatus> deleteTagFromTutorial(@PathVariable(value = "formsId") Long formsId, @PathVariable(value = "questionsId") Long questionsId) {
+    public ResponseEntity<HttpStatus> deleteQuestionFromQuestionnaire(@PathVariable(value = "formsId") Long formsId, @PathVariable(value = "questionsId") Long questionsId) {
     Questionnaire questionnaire = questionnaireRepository.findById(formsId)
                 .orElseThrow(() -> new ResourceNotFoundException("questionnaire","id" ,formsId));
 
         questionnaire.remove(questionsId);
         questionnaireRepository.save(questionnaire);
+        Optional<Grading> optionalGrading = gradingRepository.findByQuestionnaireIdAndQuestionId(formsId, questionsId);
+        optionalGrading.ifPresent(gradingRepository::delete);
+
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
