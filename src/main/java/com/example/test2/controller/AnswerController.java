@@ -63,11 +63,6 @@ public class AnswerController {
 
 
 
-
-
-
-
-
     @PostMapping("/register")
     public void saveAnswers(@RequestBody Answer answer) {
         List<Answer> persistedUser = answerRepository.saveAll(List.of(answer));
